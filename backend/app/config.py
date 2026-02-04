@@ -13,6 +13,12 @@ class Settings(BaseSettings):
     database_url: str
     database_echo: bool = False
     
+    # security
+    secret_key: str
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+    refresh_token_expire_days: int = 7
+    
     model_config = SettingsConfigDict(
         env_file='.env',
         env_file_encoding='utf-8',

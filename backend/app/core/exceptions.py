@@ -20,3 +20,9 @@ class ConflictError(BootCampExceptions):
     
     def __init__(self, message = "Resource conflict"):
         super().__init__(message, 404)
+        
+class AuthenticationError(BootCampExceptions):
+    """Exception raised for autherization errors"""
+    
+    def __init__(self, message: str = "Could not validate credentials"):
+        super().__init__(message, status_code=401)
