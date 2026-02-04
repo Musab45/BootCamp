@@ -1,7 +1,7 @@
 from typing import Any
 from jose import jwt, JWTError
 from passlib.context import CryptContext
-from backend.app.config import get_settings
+from app.config import get_settings
 from datetime import datetime, timedelta, timezone
 
 settings = get_settings()
@@ -28,7 +28,8 @@ def create_refresh_token(data: dict[str, Any]) -> str:
     """Generate JWT refresh token"""
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(days=settings.refresh_token_expire_days)
-    to_encode({"exp": expire, "type": "refresh"})
+    to_encode.update({"exp": expire, "type": "refresh"})
+    return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
     
 def decode_token(token: str) -> dict[str, Any]:
     """Decode and verify a JWT token"""

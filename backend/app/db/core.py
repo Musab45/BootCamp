@@ -3,6 +3,7 @@ from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from app.config import get_settings
+from app.db.base import Base
 
 settings = get_settings()
 
@@ -13,6 +14,9 @@ engine = create_engine(
     max_overflow=20,
     echo=settings.database_echo
 )
+
+# create all tables
+#Base.metadata.create_all(bind=engine)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

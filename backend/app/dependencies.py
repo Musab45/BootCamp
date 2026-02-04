@@ -2,12 +2,12 @@ from uuid import UUID
 from fastapi import Depends
 from typing import Annotated
 from requests import Session
-from backend.app.core.exceptions import AuthenticationError
-from backend.app.db.core import get_db
-from backend.app.db.repositories.user_repository import UserRepository
-from backend.app.schemas.auth import TokenData
+from app.core.exceptions import AuthenticationError
+from app.db.core import get_db
+from app.db.repositories.user_repository import UserRepository
+from app.schemas.auth import TokenData
 from fastapi.security import OAuth2PasswordBearer
-from backend.app.core.security import decode_token
+from app.core.security import decode_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 

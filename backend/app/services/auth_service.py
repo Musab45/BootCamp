@@ -1,8 +1,8 @@
 from requests import Session
 from app.schemas.auth import Token
-from backend.app.core.security import create_refresh_token, verify_password, create_access_token
-from backend.app.core.exceptions import AuthenticationError
-from backend.app.db.repositories.user_repository import UserRepository
+from app.core.security import create_refresh_token, verify_password, create_access_token
+from app.core.exceptions import AuthenticationError
+from app.db.repositories.user_repository import UserRepository
 
 
 class AuthService:

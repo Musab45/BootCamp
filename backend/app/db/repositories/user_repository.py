@@ -1,7 +1,7 @@
 from typing import Optional
 from requests import Session
 from sqlalchemy import select, exists
-from backend.app.models.user import User
+from app.models.user import User
 from app.db.repositories.base import BaseRepository
 
 class UserRepository(BaseRepository[User]):

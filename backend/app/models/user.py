@@ -1,7 +1,7 @@
 from uuid import UUID, uuid4
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
-from backend.app.db.base import Base, TimeStampMixin
+from app.db.base import Base, TimeStampMixin
 
 class User(Base, TimeStampMixin):
     """User Model"""

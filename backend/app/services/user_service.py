@@ -11,7 +11,7 @@ class UserService:
     """Service for user related operations."""
     
     def __init__(self, db: Session):
-        self.repository = UserRepository
+        self.repository = UserRepository(db)
         self.db = db
         
     def get_user(self, user_id: UUID):

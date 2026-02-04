@@ -6,7 +6,7 @@ class UserBase(BaseModel):
     """Base user schema"""
     email: EmailStr
     first_name: str = Field(..., min_length=1, max_length=255)
-    last_name: str = Field(..., min_length=1, max_digits=255)
+    last_name: str = Field(..., min_length=1, max_length=255)
 
 class UserRegister(UserBase):
     """Schema for user registration"""
@@ -15,7 +15,7 @@ class UserRegister(UserBase):
 class UserUpdate(BaseModel):
     """Schema to update user info."""
     first_name: str | None = Field(..., min_length=1, max_length=255)
-    last_name: str | None = Field(..., min_length=1, max_digits=255)
+    last_name: str | None = Field(..., min_length=1, max_length=255)
 
 
 class UserResponse(UserBase):
