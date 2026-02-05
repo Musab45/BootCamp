@@ -5,3 +5,4 @@ api_router = APIRouter()
 
 # sub-routers
 api_router.include_router(auth.router)
+api_router.include_router(users.router)

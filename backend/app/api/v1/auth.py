@@ -5,6 +5,7 @@ from app.services.user_service import UserService
 from app.services.auth_service import AuthService
 from app.db.core import get_db
 from fastapi import APIRouter, status, Request, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -39,3 +40,17 @@ async def login(
     """Login adn receive access and refresh token"""
     auth_service = AuthService(db)
     return auth_service.authenticate_user(login_data.email, login_data.password)
+
+@router.post(
+    "/token",
+    response_model=Token,
+    summary="OAuth2 compatible token login",
+    description="OAuth2 compatible token endpoint for Swagger UI authentication",
+)
+async def token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    """OAuth2 compatible token endpoint (username field accepts email)"""
+    auth_service = AuthService(db)
+    return auth_service.authenticate_user(form_data.username, form_data.password)

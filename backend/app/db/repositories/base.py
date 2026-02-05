@@ -9,7 +9,7 @@ class BaseRepository(Generic[ModelType]):
     """Base Repo with common CRUD operations."""
     
     def __init__(self, model: Type[ModelType], db: Session):
-        self.model = model,
+        self.model = model
         self.db = db
         
     def get(self, id: UUID) -> Optional[ModelType]:

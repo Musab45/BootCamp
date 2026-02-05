@@ -8,7 +8,7 @@ class BootCampExceptions(Exception):
     def __init__(self, message: str, status_code: int = 500):
         self.message = message
         self.status_code = status_code
-        super.__init__(self.message)
+        super().__init__(self.message)
         
 class NotFoundError(BootCampExceptions):
     """Exceptions raised when a resource is not found"""
@@ -27,6 +27,12 @@ class AuthenticationError(BootCampExceptions):
     
     def __init__(self, message: str = "Could not validate credentials"):
         super().__init__(message, status_code=401)
+        
+class ValidationError(BootCampExceptions):
+    """Exception raised for validation errors."""
+    
+    def __init__(self, message: str = "Validation error"):
+        super().__init__(message, status_code=400)
         
 async def bootcamp_exception_handler(request: Request, exc: BootCampExceptions) -> JSONResponse:
     """Global Exception handler for BootCamp"""

@@ -2,8 +2,8 @@ from uuid import UUID, uuid4
 from app.models.user import User
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from app.schemas.user import UserRegister, UserUpdate
-from app.core.exceptions import NotFoundError, ConflictError
+from app.schemas.user import UserRegister, UserUpdate, PasswordChange
+from app.core.exceptions import NotFoundError, ConflictError, ValidationError
 from app.db.repositories.user_repository import UserRepository
 from app.core.security import get_password_hash, verify_password
 
@@ -61,3 +61,19 @@ class UserService:
         
         for  key, value in user_data.model_dump(exclude_unset=True).items():
             setattr(user, key, value)
+            
+        updated_user = self.repository.update(user)
+        return updated_user
+    
+    def change_password(self, user_id: UUID, password_data: PasswordChange) -> None:
+        """Change user password"""
+        user = self.repository.get(user_id)
+        
+        if not verify_password(password_data.current_password, user.hashed_password):
+            raise ValidationError("Current password is incorrect")
+        
+        if password_data.new_password != password_data.new_password_confirm:
+            raise ValidationError("Passwords do not match")
+        
+        user.hashed_password = get_password_hash(password_data.new_password)
+        self.repository.update(user)
